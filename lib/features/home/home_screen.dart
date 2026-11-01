@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/mock/mock_data.dart';
-
+import '../providers/provider_list_screen.dart';
 enum AppMode { customer, provider }
 
 class ModeNotifier extends Notifier<AppMode> {
@@ -65,7 +65,11 @@ class _CustomerHome extends StatelessWidget {
                 for (final c in mockCategories)
                   Card(
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () => Navigator.of(context).push(
+                       MaterialPageRoute(
+                         builder: (_) => ProviderListScreen(category: c),
+                       ),
+                     ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
