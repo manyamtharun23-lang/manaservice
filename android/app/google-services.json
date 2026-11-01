@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1081133124300",
+    "project_id": "manaservice",
+    "storage_bucket": "manaservice.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081133124300:android:c1a084cc957f153e405069",
+        "android_client_info": {
+          "package_name": "com.manaservice.manaservice"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeHzq_vOz3Qzh9hQBdgHIWmC6_wkIzIAo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
