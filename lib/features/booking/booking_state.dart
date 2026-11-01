@@ -8,6 +8,18 @@ class BookingsNotifier extends Notifier<List<Booking>> {
   List<Booking> build() => [];
 
   void add(Booking b) => state = [b, ...state];
+
+  // MOCK rule: only a REQUESTED booking can be accepted or rejected.
+  // The real version of this check must run on the server.
+  void setStatus(String id, BookingStatus newStatus) {
+    state = [
+      for (final b in state)
+        if (b.id == id && b.status == BookingStatus.requested)
+          b.copyWith(status: newStatus)
+        else
+          b,
+    ];
+  }
 }
 
 final bookingsProvider =

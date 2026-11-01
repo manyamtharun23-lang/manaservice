@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/mock/mock_data.dart';
 import '../booking/my_bookings_screen.dart';
 import '../providers/provider_list_screen.dart';
+import 'provider_dashboard.dart';
 
 enum AppMode { customer, provider }
 
@@ -42,7 +43,7 @@ class HomeScreen extends ConsumerWidget {
           ),
         ],
       ),
-      body: isCustomer ? const _CustomerHome() : const _ProviderHome(),
+      body: isCustomer ? const _CustomerHome() : const ProviderDashboard(),
     );
   }
 }
@@ -95,14 +96,5 @@ class _CustomerHome extends StatelessWidget {
         ],
       ),
     );
-  }
-}
-
-class _ProviderHome extends StatelessWidget {
-  const _ProviderHome();
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-        child: Text('Provider dashboard (MOCK placeholder)'));
   }
 }
