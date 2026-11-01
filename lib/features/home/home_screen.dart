@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../data/mock/mock_data.dart';
+import '../booking/my_bookings_screen.dart';
 import '../providers/provider_list_screen.dart';
+
 enum AppMode { customer, provider }
 
 class ModeNotifier extends Notifier<AppMode> {
@@ -24,6 +26,13 @@ class HomeScreen extends ConsumerWidget {
       appBar: AppBar(
         title: const Text('ManaService'),
         actions: [
+          IconButton(
+            icon: const Icon(Icons.receipt_long),
+            tooltip: 'My bookings',
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (_) => const MyBookingsScreen()),
+            ),
+          ),
           Text(isCustomer ? 'Customer' : 'Provider'),
           Switch(
             value: !isCustomer,
@@ -66,10 +75,10 @@ class _CustomerHome extends StatelessWidget {
                   Card(
                     child: InkWell(
                       onTap: () => Navigator.of(context).push(
-                       MaterialPageRoute(
-                         builder: (_) => ProviderListScreen(category: c),
-                       ),
-                     ),
+                        MaterialPageRoute(
+                          builder: (_) => ProviderListScreen(category: c),
+                        ),
+                      ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

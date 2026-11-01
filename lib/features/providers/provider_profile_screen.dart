@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../models/provider_profile.dart';
+import '../booking/booking_form_screen.dart';
 
 class ProviderProfileScreen extends StatelessWidget {
   final ProviderProfile provider;
@@ -35,8 +36,7 @@ class ProviderProfileScreen extends StatelessWidget {
             spacing: 8,
             children: [
               Chip(label: Text(p.isVerified ? 'Verified' : 'Not verified')),
-              Chip(
-                  label: Text(p.isAvailable ? 'Available' : 'Unavailable')),
+              Chip(label: Text(p.isAvailable ? 'Available' : 'Unavailable')),
             ],
           ),
           const Divider(height: 32),
@@ -46,10 +46,9 @@ class ProviderProfileScreen extends StatelessWidget {
           const SizedBox(height: 24),
           FilledButton(
             onPressed: p.isAvailable
-                ? () => ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                            'Booking form comes in the next step (MOCK).'),
+                ? () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => BookingFormScreen(provider: p),
                       ),
                     )
                 : null,
@@ -71,8 +70,7 @@ class ProviderProfileScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(label,
-              style: const TextStyle(fontWeight: FontWeight.bold)),
+          Text(label, style: const TextStyle(fontWeight: FontWeight.bold)),
           Text(value),
         ],
       ),
