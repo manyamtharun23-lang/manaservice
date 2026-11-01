@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../models/booking.dart';
+import 'booking_details_screen.dart';
 import 'booking_state.dart';
 
 String statusLabel(BookingStatus s) {
@@ -9,6 +10,10 @@ String statusLabel(BookingStatus s) {
       return 'REQUESTED (waiting for provider)';
     case BookingStatus.accepted:
       return 'ACCEPTED';
+    case BookingStatus.inProgress:
+      return 'IN PROGRESS';
+    case BookingStatus.completed:
+      return 'COMPLETED';
     case BookingStatus.rejected:
       return 'REJECTED';
     case BookingStatus.cancelled:
@@ -42,6 +47,13 @@ class MyBookingsScreen extends ConsumerWidget {
                       'Status: ${statusLabel(b.status)}',
                     ),
                     isThreeLine: true,
+                    trailing: const Icon(Icons.chevron_right),
+                    onTap: () => Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            BookingDetailsScreen(bookingId: b.id),
+                      ),
+                    ),
                   ),
                 );
               },

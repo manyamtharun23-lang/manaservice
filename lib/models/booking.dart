@@ -1,4 +1,11 @@
-enum BookingStatus { requested, accepted, rejected, cancelled }
+enum BookingStatus {
+  requested,
+  accepted,
+  inProgress,
+  completed,
+  rejected,
+  cancelled,
+}
 
 class Booking {
   final String id;
@@ -9,6 +16,12 @@ class Booking {
   final String address;
   final DateTime scheduledAt;
   final BookingStatus status;
+  final DateTime? createdAt;
+  final DateTime? acceptedAt;
+  final DateTime? startedAt;
+  final DateTime? completedAt;
+  final DateTime? cancelledAt;
+  final int? rating;
 
   const Booking({
     required this.id,
@@ -19,9 +32,24 @@ class Booking {
     required this.address,
     required this.scheduledAt,
     required this.status,
+    this.createdAt,
+    this.acceptedAt,
+    this.startedAt,
+    this.completedAt,
+    this.cancelledAt,
+    this.rating,
   });
 
-  Booking copyWith({BookingStatus? status}) => Booking(
+  Booking copyWith({
+    BookingStatus? status,
+    DateTime? createdAt,
+    DateTime? acceptedAt,
+    DateTime? startedAt,
+    DateTime? completedAt,
+    DateTime? cancelledAt,
+    int? rating,
+  }) =>
+      Booking(
         id: id,
         providerId: providerId,
         providerName: providerName,
@@ -30,5 +58,11 @@ class Booking {
         address: address,
         scheduledAt: scheduledAt,
         status: status ?? this.status,
+        createdAt: createdAt ?? this.createdAt,
+        acceptedAt: acceptedAt ?? this.acceptedAt,
+        startedAt: startedAt ?? this.startedAt,
+        completedAt: completedAt ?? this.completedAt,
+        cancelledAt: cancelledAt ?? this.cancelledAt,
+        rating: rating ?? this.rating,
       );
 }
