@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../models/booking.dart';
 import '../../models/provider_profile.dart';
+import '../address/address_form.dart';
 import 'booking_state.dart';
 
 class BookingFormScreen extends ConsumerStatefulWidget {
@@ -15,7 +17,7 @@ class BookingFormScreen extends ConsumerStatefulWidget {
 class _BookingFormScreenState extends ConsumerState<BookingFormScreen> {
   final _formKey = GlobalKey<FormState>();
   final _problem = TextEditingController();
-  final _address = TextEditingController();
+  final _address = AddressFormController();
   DateTime? _date;
   TimeOfDay? _time;
 
@@ -54,16 +56,23 @@ class _BookingFormScreenState extends ConsumerState<BookingFormScreen> {
       return;
     }
     final when = DateTime(
-        _date!.year, _date!.month, _date!.day, _time!.hour, _time!.minute);
+      _date!.year,
+      _date!.month,
+      _date!.day,
+      _time!.hour,
+      _time!.minute,
+    );
     final p = widget.provider;
-    ref.read(bookingsProvider.notifier).add(
+    ref
+        .read(bookingsProvider.notifier)
+        .add(
           Booking(
             id: 'b${DateTime.now().millisecondsSinceEpoch}',
             providerId: p.id,
             providerName: p.name,
             categoryId: p.categoryId,
             problem: _problem.text.trim(),
-            address: _address.text.trim(),
+            address: _address.toAddress().oneLine,
             scheduledAt: when,
             status: BookingStatus.requested,
           ),
@@ -71,7 +80,9 @@ class _BookingFormScreenState extends ConsumerState<BookingFormScreen> {
     Navigator.of(context).popUntil((r) => r.isFirst);
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text('Request sent. Status: REQUESTED (waiting for provider).'),
+        content: Text(
+          'Request sent. Status: REQUESTED (waiting for provider).',
+        ),
       ),
     );
   }
@@ -102,16 +113,12 @@ class _BookingFormScreenState extends ConsumerState<BookingFormScreen> {
                   : null,
             ),
             const SizedBox(height: 16),
-            TextFormField(
-              controller: _address,
-              decoration: const InputDecoration(
-                labelText: 'Service address',
-                border: OutlineInputBorder(),
-              ),
-              validator: (v) => (v == null || v.trim().isEmpty)
-                  ? 'Please enter the service address'
-                  : null,
+            Text(
+              'Service address',
+              style: Theme.of(context).textTheme.titleMedium,
             ),
+            const SizedBox(height: 8),
+            AddressForm(controller: _address),
             const SizedBox(height: 16),
             Row(
               children: [
